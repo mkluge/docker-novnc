@@ -1,20 +1,26 @@
 FROM debian:bullseye
 
 # Install git, supervisor, VNC, & X11 packages
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y \
+RUN apt-get update
+RUN apt-get upgrade
+RUN apt-get install -y \
       bash \
       fluxbox \
-      git \
+      git
+RUN apt-get install -y \
       net-tools \
       novnc \
       supervisor \
-      x11vnc \
-      xterm \
+      x11vnc
+RUN apt-get install -y xterm
+RUN apt-get install -y vlc
+RUN apt-get install -y gwenview
+RUN apt-get install -y \
+      ssh \
       xvfb
 
 # Setup demo environment variables
+VOLUME data
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -28,3 +34,4 @@ ENV HOME=/root \
 COPY . /app
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080
+EXPOSE 22
