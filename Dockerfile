@@ -18,6 +18,13 @@ RUN apt-get install -y gwenview
 RUN apt-get install -y \
       ssh \
       xvfb
+RUN apt-get install -y vim
+
+# for sshd
+RUN mkdir /run/sshd
+RUN mkdir /root/.ssh
+COPY authorized_keys /root/.ssh/authorized_keys
+RUN echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
 # Setup demo environment variables
 VOLUME data
