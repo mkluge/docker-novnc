@@ -26,6 +26,14 @@ RUN mkdir /root/.ssh
 COPY authorized_keys /root/.ssh/authorized_keys
 RUN echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
+# create a user
+RUN groupadd comp
+RUN useradd -d /home/comp --gid comp comp
+RUN mkdir -p /home/comp
+RUN mkdir -p /home/comp/.ssh
+COPY authorized_keys /home/comp/.ssh/authorized_keys
+RUN chown -R comp:comp /home/comp
+
 # Setup demo environment variables
 VOLUME data
 ENV HOME=/root \
